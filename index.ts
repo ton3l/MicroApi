@@ -1,5 +1,3 @@
-import { parse } from "path";
-
 const names = ['Marçal', 'Daniel', 'Fábio'];
 
 console.log('server started\n');
