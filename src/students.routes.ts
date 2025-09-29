@@ -1,33 +1,21 @@
 import express from 'express';
+import { database } from './index';
 
-const app = express();
-app.use(express.json());
-const port = 3000;
+const studentsRouter = express.Router();
 
-const database = {
-    students: [] as Array<string>,
-};
-
-app.get('/', (req, res) => {
-    res.status(200).send('Hello World!');
-});
-
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
-
-app.get('/students', (req, res) => {
+studentsRouter.get('/students', (req, res) => {
     res.status(200).send(database.students);
 });
 
-app.post('/students', (req, res) => {
-    console.log(req.body);
+studentsRouter.post('/students', (req, res) => {
     const newStudent = req.body.name;
+
     database.students.push(newStudent);
+
     res.status(201).send(newStudent);
 });
 
-app.put('/students/:name', (req, res) => {
+studentsRouter.put('/students/:name', (req, res) => {
     const oldStudent = req.params.name;
     const newStudent = req.body.name;
 
@@ -41,7 +29,7 @@ app.put('/students/:name', (req, res) => {
     res.status(200).send(newStudent);
 });
 
-app.delete('/students/:name', (req, res) => {
+studentsRouter.delete('/students/:name', (req, res) => {
     const delStudent = req.params.name;
 
     for (const [index, student] of database.students.entries()) {
@@ -53,3 +41,5 @@ app.delete('/students/:name', (req, res) => {
 
     res.status(200).send(0);
 });
+
+export { studentsRouter };
