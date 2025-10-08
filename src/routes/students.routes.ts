@@ -1,7 +1,7 @@
+import { database } from '../index';
 import express from 'express';
-import { database } from './index';
 
-const studentsRouter = express.Router();
+export const studentsRouter = express.Router();
 
 studentsRouter.get('/students', (req, res) => {
     res.status(200).send(database.students);
@@ -41,5 +41,3 @@ studentsRouter.delete('/students/:name', (req, res) => {
 
     res.status(200).send(0);
 });
-
-export { studentsRouter };
