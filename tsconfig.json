@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@prisma-client/*": ["./prisma/generated/prisma/*"]
+    },
+
     // Environment setup & latest features
     "lib": ["ESNext"],
     "target": "ESNext",
