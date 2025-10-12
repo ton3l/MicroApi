@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@prisma-client/*": ["./prisma/generated/prisma/*"]
+      "@prisma-client/*": ["./prisma/generated/prisma/*"],
+      "@services/*": ["./src/services/*"],
+      "@db": ["./src/db/index.ts"],
     },
 
     // Environment setup & latest features

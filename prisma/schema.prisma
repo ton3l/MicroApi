@@ -10,5 +10,5 @@ generator client {
 
 model Student {
     id   Int    @id @default(autoincrement())
-    name String
+    name String @unique
 }
