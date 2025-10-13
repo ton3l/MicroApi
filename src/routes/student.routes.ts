@@ -39,5 +39,5 @@ studentRouter.delete('/students/:name', async (req, res) => {
 
     const delStudent = await studentsService.delete(name);
 
-    res.redirect('/students');
+    res.status(200).send(delStudent);
 });
