@@ -4,37 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= student.name %></title>
+    <link rel="stylesheet" href="/styles/student.css">
 </head>
 <body>
-    <pre>
-        {
-            "id": "<%= student.id %>"
-            "name": "<%= student.name %>"
-        }
-    </pre>
-    <button id="delete">del</button>
-    <form action="">
-        <input type="text">
-        <button id="update">edit</button>
-    </form>
-    <a href="/">Home</a>
+    <main class="container">
+        <div class="card">
+            <h1>Detalhes do Estudante</h1>
+            <p><span class="label">ID:</span> <%= student.id %></p>
+            <p><span class="label">Nome:</span> <%= student.name %></p>
+        </div>
+
+        <div class="card">
+            <h2>Ações</h2>
+            <form id="update-form">
+                <input type="text" placeholder="Novo nome..." required>
+                <button id="update" type="submit">Atualizar Nome</button>
+            </form>
+            <button id="delete">Deletar Estudante</button>
+        </div>
+
+        <a href="/students" class="home-link">Voltar para a Lista</a>
+    </main>
 
     <script>
         const deleteButton = document.getElementById('delete');
+        const updateForm = document.getElementById('update-form');
         const updateButton = document.getElementById('update');
 
         deleteButton.addEventListener('click', () => {
-            fetch(
-                '/students/<%= student.name %>', { method: 'DELETE' }
-            )
+            fetch('/students/<%= student.name %>', { method: 'DELETE' })
             .then(() => {
-                window.location.pathname = '/students'
+                window.location.href = '/students';
             });
         });
 
-        updateButton.addEventListener('click', (e) => {
+        updateForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const newName = document.querySelector('input').value;
+            const newName = updateForm.querySelector('input').value;
+            if (!newName) return;
 
             fetch('/students/<%= student.name %>', { 
                 method: 'PUT', 
@@ -43,8 +50,14 @@
                 },
                 body: JSON.stringify({ name: newName })
             })
-            .then(() => {
-                window.location.pathname = '/students/' + newName 
+            .then(res => {
+                if (res.ok) {
+                    // Redirect to the new student page
+                    window.location.href = '/students/' + newName;
+                } else {
+                    // Handle errors if needed
+                    console.error('Failed to update student');
+                }
             });
         });
     </script>

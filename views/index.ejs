@@ -7,22 +7,23 @@
     <link rel="stylesheet" href="/styles/index.css">
 </head>
 <body>
-    <form action="/students" method="post">
-        <input type="text" name="name">
-        <button type="submit" value="Cadastrar">Cadastrar</button>
-    </form>
-    <hr>
-    <section>
-        <% for (const student of students) { %>
-            <pre>
-                <a href="/students/<%= student.name %>">
-                {
-                    "id": <%= student.id %>
-                    "name": "<%= student.name %>"
-                }
+    <div class="container">
+        <h1>Estudantes</h1>
+        <div class="form-container">
+            <form action="/students" method="post">
+                <input type="text" name="name" placeholder="Nome do estudante..." required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+
+        <main class="student-list">
+            <% for (const student of students) { %>
+                <a href="/students/<%= student.name %>" class="student-card">
+                    <h2 class="student-name"><%= student.name %></h2>
+                    <span class="student-id">ID: <%= student.id %></span>
                 </a>
-            </pre>
-        <% } %>
-    </section>
+            <% } %>
+        </main>
+    </div>
 </body>
 </html>
