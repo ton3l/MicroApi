@@ -24,7 +24,7 @@ export class StudentsService {
     }
 
     async getAll() {
-        const students = await prisma.student.findMany();
+        const students = await prisma.student.findMany({ orderBy: { id: 'asc' } });
         return students;
     }
 

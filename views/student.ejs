@@ -6,6 +6,47 @@
     <title><%= student.name %></title>
 </head>
 <body>
-    
+    <pre>
+        {
+            "id": "<%= student.id %>"
+            "name": "<%= student.name %>"
+        }
+    </pre>
+    <button id="delete">del</button>
+    <form action="">
+        <input type="text">
+        <button id="update">edit</button>
+    </form>
+    <a href="/">Home</a>
+
+    <script>
+        const deleteButton = document.getElementById('delete');
+        const updateButton = document.getElementById('update');
+
+        deleteButton.addEventListener('click', () => {
+            fetch(
+                '/students/<%= student.name %>', { method: 'DELETE' }
+            )
+            .then(() => {
+                window.location.pathname = '/students'
+            });
+        });
+
+        updateButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const newName = document.querySelector('input').value;
+
+            fetch('/students/<%= student.name %>', { 
+                method: 'PUT', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: newName })
+            })
+            .then(() => {
+                window.location.pathname = '/students/' + newName 
+            });
+        });
+    </script>
 </body>
 </html>

@@ -11,6 +11,10 @@ section {
     flex-wrap: wrap;
     flex-direction: column;
     gap: 6px;
-    height: 70dvh;
-    width: 100dvw;
+    height: 85dvh;
+    max-width: 100dvw;
+}
+
+a {
+    text-decoration: none;
 }

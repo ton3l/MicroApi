@@ -4,10 +4,14 @@ import express from 'express';
 export const studentRouter = express.Router();
 const studentsService = new StudentsService();
 
-
 studentRouter.get('/students', async (req, res) => {
     const students = await studentsService.getAll();
     res.render('index', { students });
+});
+
+studentRouter.get('/students/:name', async (req, res) => {
+    const student = await studentsService.get(req.params.name);
+    res.render('student', { student });
 });
 
 studentRouter.post('/students', async (req, res) => {
@@ -15,19 +19,19 @@ studentRouter.post('/students', async (req, res) => {
 
     await studentsService.create(req.body.name);
 
-    res.redirect('/');
+    res.redirect('/students/' + req.body.name);
 });
 
 studentRouter.put('/students/:name', async (req, res) => {
     const oldName = req.params.name;
     const newName = req.body.name;
 
-    const newStudent = await studentsService.update({
+    const student = await studentsService.update({
         name: oldName,
         newName: newName,
     });
 
-    res.status(200).send(newStudent);
+    res.status(200).send(student);
 });
 
 studentRouter.delete('/students/:name', async (req, res) => {
@@ -35,5 +39,5 @@ studentRouter.delete('/students/:name', async (req, res) => {
 
     const delStudent = await studentsService.delete(name);
 
-    res.status(200).send(delStudent);
+    res.redirect('/students');
 });

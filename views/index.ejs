@@ -15,10 +15,12 @@
     <section>
         <% for (const student of students) { %>
             <pre>
+                <a href="/students/<%= student.name %>">
                 {
-                    "id": "<%= student.id %>"
+                    "id": <%= student.id %>
                     "name": "<%= student.name %>"
                 }
+                </a>
             </pre>
         <% } %>
     </section>
