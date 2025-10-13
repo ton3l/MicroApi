@@ -1,21 +1,20 @@
 import { router } from './routes/index.routes';
 import express from 'express';
 
-export const database = {
-    students: ['Marçal', 'Joaquim'] as Array<string>,
-};
-
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.use(express.static('views'));
 
 app.get('/', (req, res) => {
-    res.status(200).send('Use a rota /students para ver os estudantes');
+    res.redirect('/students');
 });
 
 app.use('/', router);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`App listening on http://localhost:${port}`);
 });

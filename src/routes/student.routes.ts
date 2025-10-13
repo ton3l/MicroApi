@@ -4,15 +4,18 @@ import express from 'express';
 export const studentRouter = express.Router();
 const studentsService = new StudentsService();
 
+
 studentRouter.get('/students', async (req, res) => {
     const students = await studentsService.getAll();
-    res.status(200).send(students);
+    res.render('index', { students });
 });
 
 studentRouter.post('/students', async (req, res) => {
-    const newStudent = await studentsService.create(req.body.name);
+    if (typeof req.body.name !== 'string') return res.status(400).send('Envie uma string válida');
 
-    res.status(201).send(newStudent);
+    await studentsService.create(req.body.name);
+
+    res.redirect('/');
 });
 
 studentRouter.put('/students/:name', async (req, res) => {
